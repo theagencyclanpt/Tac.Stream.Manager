@@ -1,0 +1,49 @@
+{
+  "title": "Team Pro Twitter",
+  "overlay": "/public/resources/banners/overlays/twitter.png",
+  "width": 1920,
+  "height": 1080,
+  "fontBase": "35pt BebasNeue, Addictive",
+  "preview": {
+    "width": 800,
+    "height": 450
+  },
+  "inputs": [
+    {
+      "type": "text",
+      "label": "TITULO DO JOGO",
+      "id": "TEAM_PRO_TWITTER-titulo-comp",
+      "x": 1880,
+      "y": 320,
+      "color": "#95191B",
+      "font": "35pt BebasNeue",
+      "textAlign": "right"
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 1",
+      "id": "TEAM_PRO_TWITTER-equipa-1",
+      "x": 920,
+      "y": 650,
+      "width": 200,
+      "height": 200
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 2",
+      "id": "TEAM_PRO_TWITTER-equipa-2",
+      "x": 1512,
+      "y": 650,
+      "width": 200,
+      "height": 200
+    },
+    {
+      "type": "file",
+      "label": "CAMPEONATO LOGO (height 100px)",
+      "id": "TEAM_PRO_TWITTER-camp",
+      "x": 1680,
+      "y": 180,
+      "max-height": 100
+    }
+  ]
+}

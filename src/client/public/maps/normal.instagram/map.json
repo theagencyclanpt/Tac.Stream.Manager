@@ -1,0 +1,80 @@
+{
+  "title": "Instragram",
+  "overlay": "/public/resources/banners/overlays/insta.png",
+  "width": 1080,
+  "height": 1920,
+  "fontBase": "35pt BebasNeue, Addictive",
+  "preview": {
+    "width": 450,
+    "height": 800
+  },
+  "options": [
+    {
+      "label": "Tem stream?",
+      "type": "checkbox",
+      "templateOverride": "/public/maps/normal.instagram/background.override.png",
+      "id": "HAS_STREAM"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "text",
+      "label": "TITULO DO JOGO",
+      "id": "insta-titulo-comp",
+      "x": 1040,
+      "y": 600,
+      "color": "#95191B",
+      "font": "35pt BebasNeue",
+      "textAlign": "right"
+    },
+    {
+      "type": "time",
+      "label": "HORA",
+      "id": "insta-hora",
+      "x": 425,
+      "y": 1420,
+      "color": "white",
+      "font": "60pt Addictive",
+      "textAlign": "start"
+    },
+    {
+      "type": "text",
+      "label": "TWITCH",
+      "id": "insta-twitch",
+      "x": 565,
+      "y": 1585,
+      "color": "white",
+      "font": "45pt BebasNeue",
+      "textAlign": "center",
+      "dependency": {
+        "HAS_STREAM": true
+      }
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 1",
+      "id": "insta-equipa-1",
+      "x": 205,
+      "y": 893,
+      "width": 160,
+      "height": 160
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 2",
+      "id": "insta-equipa-2",
+      "x": 692,
+      "y": 893,
+      "width": 160,
+      "height": 160
+    },
+    {
+      "type": "file",
+      "label": "CAMPEONATO LOGO (height 100px)",
+      "id": "insta-camp",
+      "x": 830,
+      "y": 450,
+      "max-height": 100
+    }
+  ]
+}

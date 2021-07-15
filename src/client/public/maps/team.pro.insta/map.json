@@ -1,0 +1,80 @@
+{
+  "title": "Team Pro Instagram",
+  "overlay": "/public/resources/banners/overlays/insta.png",
+  "width": 1080,
+  "height": 1920,
+  "fontBase": "35pt BebasNeue, Addictive",
+  "options": [
+    {
+      "label": "Tem stream?",
+      "type": "checkbox",
+      "templateOverride": "./maps/team.pro.insta/background.override.png",
+      "id": "HAS_STREAM"
+    }
+  ],
+  "preview": {
+    "width": 450,
+    "height": 800
+  },
+  "inputs": [
+    {
+      "type": "text",
+      "label": "TITULO DO JOGO",
+      "id": "TEAM_PRO_INSTA-titulo-comp",
+      "x": 1050,
+      "y": 210,
+      "color": "#95191B",
+      "font": "35pt BebasNeue",
+      "textAlign": "right"
+    },
+    {
+      "type": "time",
+      "label": "HORA",
+      "id": "TEAM_PRO_INSTA-hora",
+      "x": 740,
+      "y": 938,
+      "color": "white",
+      "font": "60pt Addictive",
+      "textAlign": "center"
+    },
+    {
+      "type": "text",
+      "label": "TWITCH",
+      "id": "TEAM_PRO_INSTA-twitch",
+      "x": 810,
+      "y": 1100,
+      "color": "white",
+      "font": "45pt BebasNeue",
+      "textAlign": "center",
+      "dependency": {
+        "HAS_STREAM": true
+      }
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 1",
+      "id": "TEAM_PRO_INSTA-equipa-1",
+      "x": 213,
+      "y": 487,
+      "width": 170,
+      "height": 170
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 2",
+      "id": "TEAM_PRO_INSTA-equipa-2",
+      "x": 693,
+      "y": 487,
+      "width": 170,
+      "height": 170
+    },
+    {
+      "type": "file",
+      "label": "CAMPEONATO LOGO (height 100px)",
+      "id": "TEAM_PRO_INSTA-camp",
+      "x": 843,
+      "y": 95,
+      "max-height": 100
+    }
+  ]
+}

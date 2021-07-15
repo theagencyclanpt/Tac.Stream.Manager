@@ -1,0 +1,49 @@
+{
+  "title": "Twitter",
+  "overlay": "/public/resources/banners/overlays/twitter.png",
+  "width": 1920,
+  "height": 1080,
+  "fontBase": "35pt BebasNeue, Addictive",
+  "preview": {
+    "width": 800,
+    "height": 450
+  },
+  "inputs": [
+    {
+      "type": "text",
+      "label": "TITULO DO JOGO",
+      "id": "twitter-titulo-comp",
+      "x": 1520,
+      "y": 300,
+      "color": "#95191B",
+      "font": "35pt BebasNeue",
+      "textAlign": "right"
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 1",
+      "id": "twitter-equipa-1",
+      "x": 558,
+      "y": 623,
+      "width": 200,
+      "height": 200
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 2",
+      "id": "twitter-equipa-2",
+      "x": 1150,
+      "y": 623,
+      "width": 200,
+      "height": 200
+    },
+    {
+      "type": "file",
+      "label": "CAMPEONATO LOGO (height 100px)",
+      "id": "twitter-camp",
+      "x": 1310,
+      "y": 150,
+      "max-height": 100
+    }
+  ]
+}

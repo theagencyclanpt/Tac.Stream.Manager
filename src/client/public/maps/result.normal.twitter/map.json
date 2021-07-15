@@ -1,0 +1,168 @@
+{
+  "title": "Twitter Result",
+  "overlay": "/public/resources/banners/overlays/twitter.png",
+  "width": 1920,
+  "height": 1080,
+  "fontBase": "35pt BebasNeue, Addictive",
+  "preview": {
+    "width": 800,
+    "height": 450
+  },
+  "options": [
+    {
+      "label": "Best of 3?",
+      "type": "checkbox",
+      "id": "GAME_TYPE"
+    },
+    {
+      "label": "VITÓRIA?",
+      "type": "checkbox",
+      "id": "IS_VITORY"
+    },
+    {
+      "label": "DERROTA?",
+      "type": "checkbox",
+      "id": "IS_DEFEAT"
+    }
+  ],
+  "statics": [
+    {
+      "type": "text",
+      "value": "VITÓRIA",
+      "x": 520,
+      "y": 480,
+      "color": "#137132",
+      "font": "150pt RussoOne",
+      "textAlign": "left",
+      "dependency": {
+        "IS_VITORY": true
+      }
+    },
+    {
+      "type": "text",
+      "value": "DERROTA",
+      "x": 520,
+      "y": 480,
+      "color": "#95191B",
+      "font": "150pt RussoOne",
+      "textAlign": "left",
+      "dependency": {
+        "IS_DEFEAT": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "type": "text",
+      "label": "TITULO DO JOGO",
+      "id": "RESULT_TWITTER-titulo-comp",
+      "x": 1447,
+      "y": 270,
+      "color": "#95191B",
+      "font": "35pt BebasNeue",
+      "textAlign": "right"
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 1",
+      "id": "RESULT_TWITTER-equipa-1",
+      "x": 655,
+      "y": 627,
+      "width": 160,
+      "height": 160
+    },
+    {
+      "type": "file",
+      "label": "EQUIPA 2",
+      "id": "RESULT_TWITTER-equipa-2",
+      "x": 1107,
+      "y": 627,
+      "width": 160,
+      "height": 160
+    },
+    {
+      "type": "text",
+      "label": "TOTAL MAPAS - EQUIPA 1",
+      "id": "RESULT_TWITTER-mapas-team1",
+      "x": 610,
+      "y": 800,
+      "color": "black",
+      "font": "200pt RussoOne",
+      "textAlign": "right"
+    },
+    {
+      "type": "text",
+      "label": "TOTAL MAPAS - EQUIPA 2",
+      "id": "RESULT_TWITTER-mapas-team2",
+      "x": 1312,
+      "y": 800,
+      "color": "#95191B",
+      "font": "200pt RussoOne",
+      "textAlign": "left"
+    },
+    {
+      "type": "file",
+      "label": "CAMPEONATO LOGO",
+      "id": "RESULT_TWITTER-camp",
+      "x": 1245,
+      "y": 130
+    },
+    {
+      "type": "text",
+      "label": "Jogo 1",
+      "id": "RESULT-jogo1",
+      "x": 650,
+      "y": 891,
+      "color": "white",
+      "font": "35pt BebasNeue",
+      "textAlign": "center",
+      "shape": {
+        "x": 500,
+        "y": 850,
+        "width": 300,
+        "height": 50,
+        "color": "#95191B"
+      },
+      "dependency": {
+        "GAME_TYPE": true
+      }
+    },
+    {
+      "type": "text",
+      "label": "Jogo 2",
+      "id": "RESULT-jogo2",
+      "x": 980,
+      "y": 891,
+      "color": "white",
+      "font": "35pt BebasNeue",
+      "textAlign": "center",
+      "shape": {
+        "x": 830,
+        "y": 850,
+        "width": 300,
+        "height": 50,
+        "color": "black"
+      }
+    },
+    {
+      "type": "text",
+      "label": "Jogo 3",
+      "id": "RESULT-jogo3",
+      "x": 1315,
+      "y": 891,
+      "color": "white",
+      "textAlign": "center",
+      "font": "35pt BebasNeue",
+      "shape": {
+        "x": 1165,
+        "y": 850,
+        "width": 300,
+        "height": 50,
+        "color": "#95191B"
+      },
+      "dependency": {
+        "GAME_TYPE": true
+      }
+    }
+  ]
+}
