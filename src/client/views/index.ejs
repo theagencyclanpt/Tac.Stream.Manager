@@ -13,45 +13,15 @@
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="/public/styles/_reset.css" />
     <link rel="stylesheet" href="/public/styles/home.css" />
-    <title>BANNER GENARATER</title>
+    <title>Tac Stream Manager</title>
 </head>
 
 <body>
-    <main>
-        <div class="d-flex flex-column justify-content-center align-items-start bg-light" style="max-width: 450px">
-            <div class="card shadow-sm h-100" style="width: 22rem;">
-                <div id="formBanner"
-                    class="card-body  d-flex flex-row  justify-content-center align-items-start w-100 h-100 p-2 overflow-auto">
-                    <div id="dynamic_form" class="mb-3 w-100"> </div>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-column justify-content-center align-items-center bg-light  ps-5 pe-5"
-            style="width: 100%;">
-            <canvas id="preview_canvas" style="display: none;"></canvas>
-            <img class="shadow-lg img-fluid" id="preview_image">
-        </div>
-        <div class="d-flex flex-column justify-content-center align-items-center bg-light" style="max-width: 450px">
-            <div class="card shadow-sm h-100" style="width: 22rem;">
-                <div class="card-body  d-flex flex-column  justify-content-center align-items-center p-2 w-100">
-                    <div class="form-group w-100">
-                        <label>TIPO DO BANNER</label>
-                        <select class="form-select w-100" id="bannerType"
-                            onchange="onBannerTypeSelectChange()"></select>
-                    </div>
-                    <div id="dynamic_form_options" class="mb-3 d-flex flex-column justify-content-start w-100 mb-auto">
-                    </div>
-                    <div class="btn-toolbar  d-flex justify-content-center w-100">
-                        <button type="button" class="btn btn-success w-100" onclick="download_image()">DOWNLOAD</button>
-                    </div>
-                </div>
-            </div>
+    <main class="d-flex flex-column justify-content-center align-items-center bg-light w-100 h-100">
+        <div class="d-flex flex-column bg-white tac-container">
         </div>
     </main>
 
-    <div class="fixed-bottom">
-        <h6>RC001-127</h6>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>
