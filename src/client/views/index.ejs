@@ -19,6 +19,20 @@
 <body>
     <main class="d-flex flex-column justify-content-center align-items-center bg-light w-100 h-100">
         <div class="d-flex flex-column bg-white tac-container">
+            <button type="button" class="btn btn-primary" onclick="startObs()">Start & Connect OBS</button>
+            <button type="button" class="btn btn-primary" onclick="stopObs()">Stop Obs</button>
+            <button type="button" class="btn btn-primary" onclick="startTransmission()">Start Transmission</button>
+            <select class="form-select" id="sceneList" onchange="choiseScene()">
+                <option value="STREAM_MONITOR1">STREAM_MONITOR1</option>
+                <option value="STREAM_MONITOR2">STREAM_MONITOR2</option>
+            </select>
+            <button type="button" class="btn btn-primary" onclick="stopTransmission()">Stop Transmission</button>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Server Ip" id="serverIp">
+                <button class="btn btn-outline-primary" type="button" onclick="startAndConnectCsGo()">Connect to Cs
+                    Go</button>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="stopCsGo()">Stop Cs Go</button>
         </div>
     </main>
 
@@ -29,8 +43,7 @@
         integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ"
         crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="/public/scripts/home.js"></script>
-
+    <script type="text/javascript" src="/public/scripts/home/eventHandler.js"></script>
 </body>
 
 </html>
