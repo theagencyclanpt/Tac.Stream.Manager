@@ -1,5 +1,5 @@
-// const DatabaseProvider = require("./database");
 const ObsController = require("./controllers/ObsController");
+const CsGoController = require("./controllers/CsGoController");
 
 class Services {
   constructor(provider) {
@@ -8,6 +8,7 @@ class Services {
 
     this.Provider = provider();
     this.ObsController = new ObsController(this.Provider, "obs");
+    this.CsGoController = new CsGoController(this.Provider, "csgo");
     this.Mount();
   }
 
@@ -17,6 +18,7 @@ class Services {
     });
 
     this.ObsController.Mount();
+    this.CsGoController.Mount();
 
     this.Provider.on("mount", function (parent) {
       console.log("Api Service Mounted");
