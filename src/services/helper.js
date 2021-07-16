@@ -25,7 +25,23 @@ module.exports = {
         resolve(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
       });
     }),
-  startProcessAsync: ({ directory, program }) => {
+  startProcessAsync: ({ directory = null, program }) => {
+    if (!program) {
+      throw new Error("Argument program is missing.");
+    }
+
+    if (directory === null) {
+      return new Promise((resolve, reject) => {
+        exec(`start ${program}`, (err, stdout, stderr) => {
+          if (err || stderr) {
+            reject(err);
+          }
+
+          resolve(stdout);
+        });
+      });
+    }
+
     return new Promise((resolve, reject) => {
       exec(`start /d "${directory}" ${program}`, (err, stdout, stderr) => {
         if (err || stderr) {
