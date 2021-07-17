@@ -32,7 +32,7 @@ function startTransmission() {
     });
 }
 
-function choiseScene() {
+function choiceScene() {
   let selectedScen = document.getElementById("sceneList").value;
 
   fetch("/api/obs/changeScene/" + selectedScen)
@@ -65,6 +65,7 @@ function startAndConnectCsGo() {
       handlerError();
     });
 }
+
 function stopCsGo() {
   fetch("/api/csgo/stopProcess/")
     .then((r) => {
