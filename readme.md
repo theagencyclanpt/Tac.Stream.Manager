@@ -1,5 +1,6 @@
 # Tac Stream Manager
 > :warning: **This version just work on windows**
+> :warning: **This version not contain Counter Strike GSI**
 
 ## Requirements
 
