@@ -34,6 +34,11 @@ class Services {
 
     return this;
   }
+
+  OnClientConnected(ws) {
+    this.ObsController.OnClientConnected(ws);
+    this.CsGoController.OnClientConnected(ws);
+  }
 }
 
 module.exports = (Express, WebScoketProvider) =>

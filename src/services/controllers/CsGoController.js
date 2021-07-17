@@ -21,6 +21,7 @@ class CsGoController {
     this.BasePath = "/" + basePath;
     this.CsGoProcessName = "csgo.exe";
     this.State = {
+      Type: "CSGO_STATE",
       Ip: null,
       Connected: false,
     };
@@ -85,10 +86,14 @@ class CsGoController {
     );
   }
 
+  OnClientConnected(ws) {
+    ws.send(JSON.stringify({ ...this.State }));
+  }
+
   HandlerNotificationService() {
     let _oldThis = this;
     this.WebScoketProvider.clients.forEach((client) =>
-      client.send(JSON.stringify({ type: "CSGO_STATE", ..._oldThis.State }))
+      client.send(JSON.stringify({ ..._oldThis.State }))
     );
   }
 

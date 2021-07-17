@@ -20,6 +20,7 @@ class ObsController {
 
     this.obsProcessName = "obs64.exe";
     this.State = {
+      Type: "OBS_STATE",
       CurrentScene: null,
       Connected: false,
       Streaming: false,
@@ -134,6 +135,10 @@ class ObsController {
     console.log(`${this.State.Scenes.length} Available Scenes!`);
   }
 
+  OnClientConnected(ws) {
+    ws.send(JSON.stringify({ ...this.State }));
+  }
+
   HandlerProcessEvents() {
     this.ObsProcessProvider.on("error", (err) => {
       console.error("socket error:", err);
@@ -155,7 +160,6 @@ class ObsController {
       this.State.Connected = false;
       this.State.Streaming = false;
       this.TryConnect();
-      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
@@ -180,7 +184,7 @@ class ObsController {
   HandlerNotificationService() {
     let _oldThis = this;
     this.WebScoketProvider.clients.forEach((client) =>
-      client.send(JSON.stringify({ type: "OBS_STATE", ..._oldThis.State }))
+      client.send(JSON.stringify({ ..._oldThis.State }))
     );
   }
 
@@ -189,6 +193,7 @@ class ObsController {
       return;
     }
     var _oldThis = this;
+    this.HandlerNotificationService();
     this.ProcessReconnect = setInterval(function () {
       _oldThis.Connect();
     }, 1000);
