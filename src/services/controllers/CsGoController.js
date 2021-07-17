@@ -5,16 +5,23 @@ const {
 } = require("../helper");
 
 class CsGoController {
-  constructor(provider, basePath) {
+  constructor(provider, basePath, webScoketProvider) {
     if (!provider)
       throw new Error(
         "Argument provider is missing on CsGoController constructor."
       );
 
+    if (!webScoketProvider)
+      throw new Error(
+        "Argument webScoketProvider is missing on ObsController constructor."
+      );
+
+    this.WebScoketProvider = webScoketProvider;
     this.Provider = provider;
     this.BasePath = "/" + basePath;
     this.CsGoProcessName = "csgo.exe";
     this.State = {
+      Type: "CSGO_STATE",
       Ip: null,
       Connected: false,
     };
@@ -48,6 +55,8 @@ class CsGoController {
             Ip: ip,
             Connected: true,
           };
+
+          this.HandlerNotificationService();
         }
 
         response.json(this.State);
@@ -68,10 +77,23 @@ class CsGoController {
             Connected: false,
             Ip: null,
           };
+
+          this.HandlerNotificationService();
         }
 
         response.json(this.State);
       }
+    );
+  }
+
+  OnClientConnected(ws) {
+    ws.send(JSON.stringify({ ...this.State }));
+  }
+
+  HandlerNotificationService() {
+    let _oldThis = this;
+    this.WebScoketProvider.clients.forEach((client) =>
+      client.send(JSON.stringify({ ..._oldThis.State }))
     );
   }
 

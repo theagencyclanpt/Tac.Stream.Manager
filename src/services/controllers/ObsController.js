@@ -2,18 +2,25 @@ const OBSWebSocket = require("obs-websocket-js");
 const Helper = require("../helper");
 
 class ObsController {
-  constructor(provider, basePath) {
+  constructor(provider, basePath, webScoketProvider) {
     if (!provider)
       throw new Error(
         "Argument provider is missing on ObsController constructor."
       );
 
+    if (!webScoketProvider)
+      throw new Error(
+        "Argument webScoketProvider is missing on ObsController constructor."
+      );
+
+    this.WebScoketProvider = webScoketProvider;
     this.ObsProcessProvider = new OBSWebSocket();
     this.Provider = provider;
     this.BasePath = "/" + basePath;
 
     this.obsProcessName = "obs64.exe";
     this.State = {
+      Type: "OBS_STATE",
       CurrentScene: null,
       Connected: false,
       Streaming: false,
@@ -128,6 +135,10 @@ class ObsController {
     console.log(`${this.State.Scenes.length} Available Scenes!`);
   }
 
+  OnClientConnected(ws) {
+    ws.send(JSON.stringify({ ...this.State }));
+  }
+
   HandlerProcessEvents() {
     this.ObsProcessProvider.on("error", (err) => {
       console.error("socket error:", err);
@@ -136,11 +147,13 @@ class ObsController {
     this.ObsProcessProvider.on("AuthenticationSuccess", () => {
       this.State.Connected = true;
       console.log("Authentication Success");
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("AuthenticationFailure", () => {
       this.State.Connected = false;
       console.log("Authentication Failure");
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("ConnectionClosed", () => {
@@ -152,17 +165,27 @@ class ObsController {
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
       this.State.CurrentScene = data.sceneName;
       console.log(`New Active Scene: ${data.sceneName}`);
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStarted", () => {
       this.State.Streaming = true;
       console.log(`Stream started`);
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStopped", () => {
       this.State.Streaming = false;
       console.log(`Stream ended`);
+      this.HandlerNotificationService();
     });
+  }
+
+  HandlerNotificationService() {
+    let _oldThis = this;
+    this.WebScoketProvider.clients.forEach((client) =>
+      client.send(JSON.stringify({ ..._oldThis.State }))
+    );
   }
 
   TryConnect() {
@@ -170,6 +193,7 @@ class ObsController {
       return;
     }
     var _oldThis = this;
+    this.HandlerNotificationService();
     this.ProcessReconnect = setInterval(function () {
       _oldThis.Connect();
     }, 1000);
