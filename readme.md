@@ -1,5 +1,6 @@
 # Tac Stream Manager
 > :warning: **This version just work on windows**
+
 > :warning: **This version not contain Counter Strike GSI**
 
 ## Requirements
@@ -123,4 +124,37 @@ Response body 200 OK:
             "STREAM_MONITOR1",
             "STREAM_MONITOR2"
         ]
+    }
+
+## Cs Go Documentation `/api/csgo`
+
+### API Resources
+
+- [GET /startProcess/:ip](#get-startProcessip)
+- [GET /stopProcess](#get-stopProcess)
+
+### GET /startProcess/:ip
+
+Example:  http://localhost:3000/api/csgo/startProcess/185.113.141.11:27029
+
+- The ip needs to be valid.
+
+Response body 200 OK:
+
+    {
+        "Type": "CSGO_STATE",
+        "Ip": "185.113.141.11:27029",
+        "Connected": true
+    }
+
+### GET /stopProcess
+
+Example:  http://localhost:3000/api/csgo/stopProcess
+
+Response body 200 OK:
+
+    {
+        "Type": "CSGO_STATE",
+        "Ip": null,
+        "Connected": false
     }
