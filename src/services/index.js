@@ -2,12 +2,17 @@ const ObsController = require("./controllers/ObsController");
 const CsGoController = require("./controllers/CsGoController");
 
 class Services {
-  constructor(provider) {
+  constructor(provider, webScoketProvider) {
     if (!provider)
       throw new Error("Argument provider is missing on Service constructor.");
 
     this.Provider = provider();
-    this.ObsController = new ObsController(this.Provider, "obs");
+    this.WebScoketProvider = webScoketProvider;
+    this.ObsController = new ObsController(
+      this.Provider,
+      "obs",
+      this.WebScoketProvider
+    );
     this.CsGoController = new CsGoController(this.Provider, "csgo");
     this.Mount();
   }
@@ -28,4 +33,5 @@ class Services {
   }
 }
 
-module.exports = (Express) => new Services(Express);
+module.exports = (Express, WebScoketProvider) =>
+  new Services(Express, WebScoketProvider);

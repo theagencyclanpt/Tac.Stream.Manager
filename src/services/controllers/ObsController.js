@@ -2,12 +2,18 @@ const OBSWebSocket = require("obs-websocket-js");
 const Helper = require("../helper");
 
 class ObsController {
-  constructor(provider, basePath) {
+  constructor(provider, basePath, webScoketProvider) {
     if (!provider)
       throw new Error(
         "Argument provider is missing on ObsController constructor."
       );
 
+    if (!webScoketProvider)
+      throw new Error(
+        "Argument webScoketProvider is missing on ObsController constructor."
+      );
+
+    this.WebScoketProvider = webScoketProvider;
     this.ObsProcessProvider = new OBSWebSocket();
     this.Provider = provider;
     this.BasePath = "/" + basePath;
@@ -136,33 +142,46 @@ class ObsController {
     this.ObsProcessProvider.on("AuthenticationSuccess", () => {
       this.State.Connected = true;
       console.log("Authentication Success");
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("AuthenticationFailure", () => {
       this.State.Connected = false;
       console.log("Authentication Failure");
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("ConnectionClosed", () => {
       this.State.Connected = false;
       this.State.Streaming = false;
       this.TryConnect();
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
       this.State.CurrentScene = data.sceneName;
       console.log(`New Active Scene: ${data.sceneName}`);
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStarted", () => {
       this.State.Streaming = true;
       console.log(`Stream started`);
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStopped", () => {
       this.State.Streaming = false;
       console.log(`Stream ended`);
+      this.HandlerNotificationService();
     });
+  }
+
+  HandlerNotificationService() {
+    let _oldThis = this;
+    this.WebScoketProvider.clients.forEach((client) =>
+      client.send(JSON.stringify(_oldThis.State))
+    );
   }
 
   TryConnect() {
