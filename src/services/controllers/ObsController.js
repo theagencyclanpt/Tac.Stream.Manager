@@ -180,7 +180,7 @@ class ObsController {
   HandlerNotificationService() {
     let _oldThis = this;
     this.WebScoketProvider.clients.forEach((client) =>
-      client.send(JSON.stringify(_oldThis.State))
+      client.send(JSON.stringify({ type: "OBS_STATE", ..._oldThis.State }))
     );
   }
 

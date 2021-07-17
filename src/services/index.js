@@ -7,13 +7,16 @@ class Services {
       throw new Error("Argument provider is missing on Service constructor.");
 
     this.Provider = provider();
-    this.WebScoketProvider = webScoketProvider;
     this.ObsController = new ObsController(
       this.Provider,
       "obs",
-      this.WebScoketProvider
+      webScoketProvider
     );
-    this.CsGoController = new CsGoController(this.Provider, "csgo");
+    this.CsGoController = new CsGoController(
+      this.Provider,
+      "csgo",
+      webScoketProvider
+    );
     this.Mount();
   }
 
