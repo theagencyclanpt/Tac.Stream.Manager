@@ -1,11 +1,20 @@
+function PreloadStart() {
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function PreloadEnd() {
+  document.getElementById("overlay").style.display = "none";
+}
+
 function handlerError() {
-  alert("Error on request.");
+  PreloadEnd();
 }
 
 function startObs() {
+  PreloadStart();
   fetch("/api/obs/startProcess")
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -13,9 +22,10 @@ function startObs() {
 }
 
 function stopObs() {
+  PreloadStart();
   fetch("/api/obs/stopProcess")
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -23,9 +33,10 @@ function stopObs() {
 }
 
 function startTransmission() {
+  PreloadStart();
   fetch("/api/obs/startStream")
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -33,11 +44,12 @@ function startTransmission() {
 }
 
 function choiceScene() {
+  PreloadStart();
   let selectedScen = document.getElementById("sceneList").value;
 
   fetch("/api/obs/changeScene/" + selectedScen)
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -45,9 +57,10 @@ function choiceScene() {
 }
 
 function stopTransmission() {
+  PreloadStart();
   fetch("/api/obs/stopStream")
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -55,11 +68,12 @@ function stopTransmission() {
 }
 
 function startAndConnectCsGo() {
+  PreloadStart();
   let serverIp = document.getElementById("serverIp").value;
 
   fetch("/api/csgo/startProcess/" + serverIp)
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();
@@ -67,9 +81,10 @@ function startAndConnectCsGo() {
 }
 
 function stopCsGo() {
+  PreloadStart();
   fetch("/api/csgo/stopProcess/")
     .then((r) => {
-      console.log(r);
+      PreloadEnd();
     })
     .catch(() => {
       handlerError();

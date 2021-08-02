@@ -1,7 +1,113 @@
 .tac-container {
-  max-width: 75%; 
-  max-height: 85%; 
-  width: 100%; 
-  height: 100%; 
-  border: solid 1px red;
+  width: 100%;
+  height: 100%;
+}
+
+.fixed_top_right {
+  position: fixed;
+  top: 0;
+  right: 16px;
+  z-index: 1030;
+}
+
+.tac_transation_button {
+  background-color: #c01328;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0 !important;
+}
+
+.form-select:focus {
+  border-color: #ea5b64;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #eab6ba75;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  background: #6a050c;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.loader {
+  color: #6a050c;
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: "";
+}
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
 }

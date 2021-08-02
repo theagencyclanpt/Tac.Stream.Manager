@@ -1,5 +1,11 @@
 const OBSWebSocket = require("obs-websocket-js");
 const Helper = require("../helper");
+const {
+  ObsPath,
+  ObsWebSocketHost,
+  ObsWebSocketPort,
+  ObsWebSocketPassword,
+} = require("../../config");
 
 class ObsController {
   constructor(provider, basePath, webScoketProvider) {
@@ -45,7 +51,7 @@ class ObsController {
 
         if (!isRunning) {
           await Helper.startProcessAsync({
-            directory: `G:\\Program Files\\obs-studio\\bin\\64bit`,
+            directory: ObsPath,
             program: this.obsProcessName,
           });
 
@@ -115,8 +121,8 @@ class ObsController {
   async Connect() {
     try {
       await this.ObsProcessProvider.connect({
-        address: "localhost:4444",
-        password: "1234",
+        address: ObsWebSocketHost + ":" + ObsWebSocketPort,
+        password: ObsWebSocketPassword,
       });
     } catch (error) {
       return;

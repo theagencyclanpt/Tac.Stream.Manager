@@ -1,3 +1,5 @@
+require("dotenv").config();
+const { WebPort } = require("./config");
 const Express = require("express");
 const Http = require("http");
 const Websocket = require("ws");
@@ -18,6 +20,6 @@ WebScoketProvider.on("connection", (ws) => {
   Services.OnClientConnected(ws);
 });
 
-ServerProvider.listen(3000, () => {
-  console.log(`Example app listening at http://localhost:3000`);
+ServerProvider.listen(WebPort, () => {
+  console.log(`Example app listening at http://localhost:${WebPort}`);
 });
