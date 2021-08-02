@@ -1,4 +1,5 @@
 # Tac Stream Manager
+
 > :warning: **This version just work on windows**
 
 > :warning: **This version not contain Counter Strike GSI**
@@ -11,7 +12,6 @@
 
 ## Get Started
 
-
 ```bash
 git clone https://github.com/The-Agency-Clan-Dev/Tac.Stream.Manager.git
 
@@ -19,9 +19,20 @@ cd Tac.Stream.Manager
 
 npm i
 
+mv .env.dev .env
+
 npm run dev
 ```
 
+## Environment Settings
+
+```
+WEB_PORT=3001 -> Web host port
+OBS_PATH=G:\Program Files\obs-studio\bin\64bit -> Obs directory
+OBS_WEBSOCKET_HOST=localhost -> Obs websocket plugin host
+OBS_WEBSOCKET_PORT=4444 -> Obs websocket plugin port
+OBS_WEBSOCKET_PASSWORD=1234 -> Obs websocket plugin password
+```
 
 ## Obs Documentation `/api/obs`
 
@@ -35,7 +46,7 @@ npm run dev
 
 ### GET /startProcess
 
-Example:  http://localhost:3000/api/obs/startProcess
+Example: http://localhost:3000/api/obs/startProcess
 
 - Obs need to be disconnected
 
@@ -51,10 +62,9 @@ Response body 200 OK:
         ]
     }
 
-
 ### GET /stopProcess
 
-Example:  http://localhost:3000/api/obs/stopProcess
+Example: http://localhost:3000/api/obs/stopProcess
 
 - Obs need to be connected
 
@@ -72,7 +82,7 @@ Response body 200 OK:
 
 ### GET /changeScene/:sceneName
 
-Example:  http://localhost:3000/api/obs/changeScene/STREAM_MONITOR1
+Example: http://localhost:3000/api/obs/changeScene/STREAM_MONITOR1
 
 - Obs need to be connected
 
@@ -90,7 +100,7 @@ Response body 200 OK:
 
 ### GET /startStream
 
-Example:  http://localhost:3000/api/obs/startStream
+Example: http://localhost:3000/api/obs/startStream
 
 - Obs need to be connected
 - Obs need to be not streaming
@@ -109,7 +119,7 @@ Response body 200 OK:
 
 ### GET /stopStream
 
-Example:  http://localhost:3000/api/obs/startStream
+Example: http://localhost:3000/api/obs/startStream
 
 - Obs need to be connected
 - Obs need to be streaming
@@ -135,7 +145,7 @@ Response body 200 OK:
 
 ### GET /startProcess/:ip
 
-Example:  http://localhost:3000/api/csgo/startProcess/185.113.141.11:27029
+Example: http://localhost:3000/api/csgo/startProcess/185.113.141.11:27029
 
 - The ip needs to be valid.
 
@@ -149,7 +159,7 @@ Response body 200 OK:
 
 ### GET /stopProcess
 
-Example:  http://localhost:3000/api/csgo/stopProcess
+Example: http://localhost:3000/api/csgo/stopProcess
 
 Response body 200 OK:
 

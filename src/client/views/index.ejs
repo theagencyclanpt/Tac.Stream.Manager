@@ -11,15 +11,62 @@
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="/public/styles/_reset.css" />
     <link rel="stylesheet" href="/public/styles/home.css" />
     <title>Tac Stream Manager</title>
 </head>
 
 <body>
-    <main class="d-flex flex-column justify-content-center align-items-center bg-light w-100 h-100">
-        <div class="d-flex flex-column bg-white tac-container">
-            <button type="button" class="btn btn-primary" onclick="startObs()">Start & Connect OBS</button>
+    <div id="overlay" class="flex-column justify-content-center align-items-center">
+        <div class="loader">Loading...</div>
+    </div>
+    <div class="fixed_top_right animate__animated animate__fadeIn animate__slower animate__infinite">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-access-point" width="72" height="72"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="#A91421" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <line x1="12" y1="12" x2="12" y2="12.01" />
+            <path d="M14.828 9.172a4 4 0 0 1 0 5.656" />
+            <path d="M17.657 6.343a8 8 0 0 1 0 11.314" />
+            <path d="M9.168 14.828a4 4 0 0 1 0 -5.656" />
+            <path d="M6.337 17.657a8 8 0 0 1 0 -11.314" />
+        </svg>
+    </div>
+    <!-- <div class="fixed_top_right">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-access-point-off" width="72"
+            height="72" viewBox="0 0 24 24" stroke-width="1.5" stroke="#A91421" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <line x1="3" y1="3" x2="21" y2="21" />
+            <path d="M14.828 9.172a4 4 0 0 1 1.172 2.828" />
+            <path d="M17.657 6.343a8 8 0 0 1 1.635 8.952" />
+            <path d="M9.168 14.828a4 4 0 0 1 0 -5.656" />
+            <path d="M6.337 17.657a8 8 0 0 1 0 -11.314" />
+        </svg>
+    </div> -->
+    <main class="d-flex flex-column justify-content-start align-items-start w-100 h-100">
+        <div class="d-flex flex-row justify-content-around align-items-center tac-container">
+            <div style="width: 640px; height: 360px; max-width: 640px; max-height: 360px; border: 2px solid #101729;">
+            </div>
+            <div>
+                <button class=" tac_transation_button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-right-left"
+                        width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <line x1="21" y1="7" x2="3" y2="7" />
+                        <path d="M18 10l3 -3l-3 -3" />
+                        <path d="M6 20l-3 -3l3 -3" />
+                        <line x1="3" y1="17" x2="21" y2="17" />
+                    </svg>
+                </button>
+            </div>
+            <div class="d-flex flex-column justify-content-end"
+                style="width: 640px; height: 360px; border: 2px solid #101729;">
+                <select class="form-select"></select>
+            </div>
+            <!-- <button type="button" class="btn btn-primary" onclick="startObs()">Start & Connect OBS</button>
             <button type="button" class="btn btn-primary" onclick="stopObs()">Stop Obs</button>
             <button type="button" class="btn btn-primary" onclick="startTransmission()">Start Transmission</button>
             <select class="form-select" id="sceneList" onchange="choiceScene()">
@@ -32,7 +79,69 @@
                 <button class="btn btn-outline-primary" type="button" onclick="startAndConnectCsGo()">Connect to Cs
                     Go</button>
             </div>
-            <button type="button" class="btn btn-primary" onclick="stopCsGo()">Stop Cs Go</button>
+            <button type="button" class="btn btn-primary" onclick="stopCsGo()">Stop Cs Go</button> -->
+        </div>
+        <div class="d-flex flex-row justify-content-evenly align-items-center w-100 h-100">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <button class=" tac_transation_button" onclick="startObs()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M7 4v16l13 -8z" />
+                    </svg>
+                </button>
+                <button class=" tac_transation_button" onclick="stopObs()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                    </svg>
+                </button>
+
+                <span style="writing-mode: vertical-lr;">OBS</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <button class=" tac_transation_button" onclick="startTransmission()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M7 4v16l13 -8z" />
+                    </svg>
+                </button>
+                <button class=" tac_transation_button" onclick="stopTransmission()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-stop" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <rect x="5" y="5" width="14" height="14" rx="2" />
+                    </svg>
+                </button>
+                <span style="writing-mode: vertical-lr;">STREAM</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <button class=" tac_transation_button" onclick="startAndConnectCsGo()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M7 4v16l13 -8z" />
+                    </svg>
+                </button>
+                <button class=" tac_transation_button" onclick="stopCsGo()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="44"
+                        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                    </svg>
+                </button>
+                <span style="writing-mode: vertical-lr;">CS GO</span>
+            </div>
         </div>
     </main>
 
