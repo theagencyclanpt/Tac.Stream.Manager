@@ -5,6 +5,7 @@ const stopTransmissionElement = document.getElementById("stopTransmission");
 const transactionSceneElement = document.getElementById("transactionScene");
 const scenesElement = document.getElementById("scenes");
 const currentSceneImgElement = document.getElementById("currentScene");
+const previewSceneImgElement = document.getElementById("previewScene");
 
 //Create a dynamic url
 const WebSocketProvider = new WebSocket(
@@ -71,5 +72,9 @@ function OnObs(state) {
 
   if (state.CurrentSceneImage) {
     currentSceneImgElement.src = state.CurrentSceneImage;
+  }
+
+  if (state.PreviewSceneImage) {
+    previewSceneImgElement.src = state.PreviewSceneImage;
   }
 }

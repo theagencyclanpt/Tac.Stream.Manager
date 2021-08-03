@@ -30,6 +30,8 @@ class ObsController {
       Type: "OBS_STATE",
       CurrentScene: null,
       CurrentSceneImage: null,
+      PreviewScene: null,
+      PreviewSceneImage: null,
       Connected: false,
       Streaming: false,
       Scenes: [],
@@ -57,7 +59,9 @@ class ObsController {
             program: this.obsProcessName,
           });
 
-          await this.Connect();
+          try {
+            await this.Connect();
+          } catch (error) {}
         }
 
         response.json(this.State);
@@ -96,6 +100,22 @@ class ObsController {
     );
 
     this.Provider.get(
+      `${this.BasePath}/changePreviewScene/:scene`,
+      async (request, response) => {
+        let scene = request.params.scene;
+        if (this.State.Connected && this.State.PreviewScene !== scene) {
+          await this.ObsProcessProvider.send("SetPreviewScene", {
+            "scene-name": scene,
+          });
+          this.State.PreviewScene = scene;
+          this.GetScreenshot();
+        }
+
+        response.json(this.State);
+      }
+    );
+
+    this.Provider.get(
       `${this.BasePath}/startStream`,
       async (request, response) => {
         if (this.State.Connected) {
@@ -118,17 +138,28 @@ class ObsController {
         response.json(this.State);
       }
     );
+
+    this.Provider.get(
+      `${this.BasePath}/transationScene`,
+      async (request, response) => {
+        if (this.State.Connected) {
+          await this.ObsProcessProvider.send("SetCurrentScene", {
+            "scene-name": this.State.PreviewScene,
+          });
+
+          this.State.CurrentScene = this.State.PreviewScene;
+        }
+
+        response.json(this.State);
+      }
+    );
   }
 
   async Connect() {
-    try {
-      await this.ObsProcessProvider.connect({
-        address: ObsWebSocketHost + ":" + ObsWebSocketPort,
-        password: ObsWebSocketPassword,
-      });
-    } catch (error) {
-      return;
-    }
+    await this.ObsProcessProvider.connect({
+      address: ObsWebSocketHost + ":" + ObsWebSocketPort,
+      password: ObsWebSocketPassword,
+    });
 
     if (this.ProcessReconnect) {
       clearInterval(this.ProcessReconnect);
@@ -140,30 +171,36 @@ class ObsController {
     this.State.Scenes = result.scenes.map((e) => e.name);
     this.State.CurrentScene = result["current-scene"];
 
-    let _this = this;
-    await this.GetScreenshot(_this);
+    const preview = await this.ObsProcessProvider.send("GetPreviewScene");
 
-    if (!this.CurrentSceneScreenShotAction) {
-      this.CurrentSceneScreenShotAction = setInterval(
-        () => this.GetScreenshot(_this),
-        3000
-      );
-    }
+    this.State.PreviewScene = preview.name;
 
-    this.HandlerNotificationService();
     console.log(`${this.State.Scenes.length} Available Scenes!`);
   }
 
-  async GetScreenshot(_this) {
-    let data = await _this.ObsProcessProvider.send("TakeSourceScreenshot", {
-      sourceName: _this.State.CurrentScene,
+  async GetScreenshot() {
+    if (!this.State.Connected) return;
+    let data = await this.ObsProcessProvider.send("TakeSourceScreenshot", {
+      sourceName: this.State.CurrentScene,
       embedPictureFormat: "png",
       width: 960,
       height: 540,
     });
+
     if (data && data.img) {
-      _this.State.CurrentSceneImage = data.img;
-      _this.HandlerNotificationService();
+      this.State.CurrentSceneImage = data.img;
+    }
+
+    data = await this.ObsProcessProvider.send("TakeSourceScreenshot", {
+      sourceName: this.State.PreviewScene,
+      embedPictureFormat: "png",
+      width: 960,
+      height: 540,
+    });
+
+    if (data && data.img) {
+      this.State.PreviewSceneImage = data.img;
+      this.HandlerNotificationService();
     }
   }
 
@@ -176,10 +213,16 @@ class ObsController {
       console.error("socket error:", err);
     });
 
-    this.ObsProcessProvider.on("AuthenticationSuccess", () => {
+    this.ObsProcessProvider.on("AuthenticationSuccess", async () => {
       this.State.Connected = true;
       console.log("Authentication Success");
+
       this.HandlerNotificationService();
+
+      this.CurrentSceneScreenShotAction = setInterval(
+        async () => await this.GetScreenshot(),
+        2000
+      );
     });
 
     this.ObsProcessProvider.on("AuthenticationFailure", () => {
@@ -192,6 +235,7 @@ class ObsController {
       this.State.Connected = false;
       this.State.Streaming = false;
       this.TryConnect();
+      clearInterval(this.CurrentSceneScreenShotAction);
     });
 
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
@@ -226,8 +270,10 @@ class ObsController {
     }
     var _oldThis = this;
     this.HandlerNotificationService();
-    this.ProcessReconnect = setInterval(function () {
-      _oldThis.Connect();
+    this.ProcessReconnect = setInterval(async function () {
+      try {
+        await _oldThis.Connect();
+      } catch (error) {}
     }, 1000);
   }
 }
