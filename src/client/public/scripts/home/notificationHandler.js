@@ -7,6 +7,11 @@ const scenesElement = document.getElementById("scenes");
 const currentSceneImgElement = document.getElementById("currentScene");
 const previewSceneImgElement = document.getElementById("previewScene");
 
+const startAndConnectCsGoElement = document.getElementById(
+  "startAndConnectCsGo"
+);
+const stopCsGoElement = document.getElementById("stopCsGo");
+
 //Create a dynamic url
 const WebSocketProvider = new WebSocket(
   `ws://${location.hostname}:${location.port}`
@@ -21,6 +26,10 @@ WebSocketProvider.onmessage = (event) => {
   switch (state.Type) {
     case "OBS_STATE":
       OnObs(state);
+      break;
+
+    case "CSGO_STATE":
+      OnCsGo(state);
       break;
 
     default:
@@ -76,5 +85,16 @@ function OnObs(state) {
 
   if (state.PreviewSceneImage) {
     previewSceneImgElement.src = state.PreviewSceneImage;
+  }
+}
+
+function OnCsGo(state) {
+  if (state.Connected) {
+    console.log(state.Connected);
+    AllowButton(stopCsGoElement);
+    DisableButton(startAndConnectCsGoElement);
+  } else {
+    AllowButton(startAndConnectCsGoElement);
+    DisableButton(stopCsGoElement);
   }
 }
