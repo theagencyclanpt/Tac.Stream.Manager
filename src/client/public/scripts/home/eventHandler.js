@@ -13,9 +13,7 @@ function handlerError() {
 function startObs() {
   PreloadStart();
   fetch("/api/obs/startProcess")
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -24,9 +22,7 @@ function startObs() {
 function stopObs() {
   PreloadStart();
   fetch("/api/obs/stopProcess")
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -35,9 +31,7 @@ function stopObs() {
 function startTransmission() {
   PreloadStart();
   fetch("/api/obs/startStream")
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -48,9 +42,7 @@ function choiceScene() {
   let selectedScen = document.getElementById("sceneList").value;
 
   fetch("/api/obs/changeScene/" + selectedScen)
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -59,9 +51,7 @@ function choiceScene() {
 function stopTransmission() {
   PreloadStart();
   fetch("/api/obs/stopStream")
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -72,9 +62,7 @@ function startAndConnectCsGo() {
   let serverIp = document.getElementById("serverIp").value;
 
   fetch("/api/csgo/startProcess/" + serverIp)
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
@@ -83,9 +71,7 @@ function startAndConnectCsGo() {
 function stopCsGo() {
   PreloadStart();
   fetch("/api/csgo/stopProcess/")
-    .then((r) => {
-      PreloadEnd();
-    })
+    .then((r) => {})
     .catch(() => {
       handlerError();
     });
