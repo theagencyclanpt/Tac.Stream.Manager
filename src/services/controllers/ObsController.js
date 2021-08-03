@@ -24,10 +24,12 @@ class ObsController {
     this.Provider = provider;
     this.BasePath = "/" + basePath;
 
+    this.CurrentSceneScreenShotAction = null;
     this.obsProcessName = "obs64.exe";
     this.State = {
       Type: "OBS_STATE",
       CurrentScene: null,
+      CurrentSceneImage: null,
       Connected: false,
       Streaming: false,
       Scenes: [],
@@ -138,7 +140,31 @@ class ObsController {
     this.State.Scenes = result.scenes.map((e) => e.name);
     this.State.CurrentScene = result["current-scene"];
 
+    let _this = this;
+    await this.GetScreenshot(_this);
+
+    if (!this.CurrentSceneScreenShotAction) {
+      this.CurrentSceneScreenShotAction = setInterval(
+        () => this.GetScreenshot(_this),
+        3000
+      );
+    }
+
+    this.HandlerNotificationService();
     console.log(`${this.State.Scenes.length} Available Scenes!`);
+  }
+
+  async GetScreenshot(_this) {
+    let data = await _this.ObsProcessProvider.send("TakeSourceScreenshot", {
+      sourceName: _this.State.CurrentScene,
+      embedPictureFormat: "png",
+      width: 960,
+      height: 540,
+    });
+    if (data && data.img) {
+      _this.State.CurrentSceneImage = data.img;
+      _this.HandlerNotificationService();
+    }
   }
 
   OnClientConnected(ws) {

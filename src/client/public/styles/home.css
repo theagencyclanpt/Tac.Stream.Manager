@@ -19,6 +19,33 @@
   cursor: pointer;
 }
 
+.tac_transation_button_disabled {
+  background-color: #101729;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  margin: 4px 2px;
+  cursor: not-allowed;
+}
+
+.tac_transation_button_on {
+  background-color: #004f3c;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  margin: 4px 2px;
+  cursor: not-allowed;
+}
+
+.tac_transation_button_error {
+  background-color: #851d1f;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  margin: 4px 2px;
+  cursor: not-allowed;
+}
+
 .form-select {
   display: block;
   width: 100%;
@@ -28,7 +55,8 @@
   line-height: 1.5;
   color: #212529;
   background-size: 16px 12px;
-  border: 1px solid #ced4da;
+  border: none;
+  border-top: 2px solid #212529;
   border-radius: 0 !important;
 }
 
