@@ -30,6 +30,8 @@ class ObsController {
       Type: "OBS_STATE",
       CurrentScene: null,
       CurrentSceneImage: null,
+      PreviewScene: null,
+      PreviewSceneImage: null,
       Connected: false,
       Streaming: false,
       Scenes: [],
@@ -98,6 +100,22 @@ class ObsController {
     );
 
     this.Provider.get(
+      `${this.BasePath}/changePreviewScene/:scene`,
+      async (request, response) => {
+        let scene = request.params.scene;
+        if (this.State.Connected && this.State.PreviewScene !== scene) {
+          await this.ObsProcessProvider.send("SetPreviewScene", {
+            "scene-name": scene,
+          });
+          this.State.PreviewScene = scene;
+          this.GetScreenshot();
+        }
+
+        response.json(this.State);
+      }
+    );
+
+    this.Provider.get(
       `${this.BasePath}/startStream`,
       async (request, response) => {
         if (this.State.Connected) {
@@ -115,6 +133,21 @@ class ObsController {
         if (this.State.Connected) {
           await this.ObsProcessProvider.send("StopStreaming");
           this.State.Streaming = false;
+        }
+
+        response.json(this.State);
+      }
+    );
+
+    this.Provider.get(
+      `${this.BasePath}/transationScene`,
+      async (request, response) => {
+        if (this.State.Connected) {
+          await this.ObsProcessProvider.send("SetCurrentScene", {
+            "scene-name": this.State.PreviewScene,
+          });
+
+          this.State.CurrentScene = this.State.PreviewScene;
         }
 
         response.json(this.State);
@@ -138,6 +171,10 @@ class ObsController {
     this.State.Scenes = result.scenes.map((e) => e.name);
     this.State.CurrentScene = result["current-scene"];
 
+    const preview = await this.ObsProcessProvider.send("GetPreviewScene");
+
+    this.State.PreviewScene = preview.name;
+
     console.log(`${this.State.Scenes.length} Available Scenes!`);
   }
 
@@ -149,8 +186,20 @@ class ObsController {
       width: 960,
       height: 540,
     });
+
     if (data && data.img) {
       this.State.CurrentSceneImage = data.img;
+    }
+
+    data = await this.ObsProcessProvider.send("TakeSourceScreenshot", {
+      sourceName: this.State.PreviewScene,
+      embedPictureFormat: "png",
+      width: 960,
+      height: 540,
+    });
+
+    if (data && data.img) {
+      this.State.PreviewSceneImage = data.img;
       this.HandlerNotificationService();
     }
   }

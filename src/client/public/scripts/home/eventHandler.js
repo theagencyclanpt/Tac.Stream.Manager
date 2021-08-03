@@ -76,3 +76,21 @@ function stopCsGo() {
       handlerError();
     });
 }
+
+function changePreviewScene(element) {
+  PreloadStart();
+  fetch("/api/obs/changePreviewScene/" + element.value)
+    .then((r) => {})
+    .catch(() => {
+      handlerError();
+    });
+}
+
+function transationScene() {
+  PreloadStart();
+  fetch("/api/obs/transationScene/")
+    .then((r) => {})
+    .catch(() => {
+      handlerError();
+    });
+}
