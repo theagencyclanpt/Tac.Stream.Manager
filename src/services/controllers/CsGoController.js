@@ -52,6 +52,7 @@ class CsGoController {
             program: `steam://connect/${ip}/`,
           });
           this.State = {
+            Type: "CSGO_STATE",
             Ip: ip,
             Connected: true,
           };
@@ -74,6 +75,7 @@ class CsGoController {
           });
 
           this.State = {
+            Type: "CSGO_STATE",
             Connected: false,
             Ip: null,
           };

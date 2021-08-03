@@ -58,10 +58,17 @@ function stopTransmission() {
 }
 
 function startAndConnectCsGo() {
-  PreloadStart();
-  let serverIp = document.getElementById("serverIp").value;
+  let ip = prompt("Server Ip", "");
 
-  fetch("/api/csgo/startProcess/" + serverIp)
+  if (ip) {
+    connectCsGo(ip);
+  }
+}
+
+function connectCsGo(ip) {
+  PreloadStart();
+
+  fetch("/api/csgo/startProcess/" + ip)
     .then((r) => {})
     .catch(() => {
       handlerError();
