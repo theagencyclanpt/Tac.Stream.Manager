@@ -149,8 +149,8 @@
   .transactionScene-container {
     width: 100% !important;
     text-align: center;
-    transform: rotate(90deg);
-    margin: 15px 0;
+    /*transform: rotate(90deg);
+    margin: 15px 0;*/
   }
 
   .tac_transation_button,
@@ -170,8 +170,8 @@
   cursor: pointer;
 }
 
-.modal {
-  display: none !important;
+#previewModal {
+  display: none;
 }
 
 .fixed_top_right {
