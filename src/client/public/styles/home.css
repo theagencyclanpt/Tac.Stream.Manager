@@ -1,3 +1,8 @@
+.tac-container {
+  width: 100% !important;
+  margin: 5% 0;
+}
+
 @media (min-width: 993px) {
   .big-screen-config {
     display: block !important;
@@ -16,11 +21,6 @@
   .small-screen-config {
     display: block !important;
   }
-}
-
-.tac-container {
-  width: 100% !important;
-
 }
 
 @media (min-width: 577px) and (max-width: 992px) {
@@ -159,6 +159,15 @@
   .tac_transation_button_error {
     margin: 2px auto;
   }
+}
+
+.modal-button {
+  margin: 20px auto;
+  background-color: #101729;
+  border: none;
+  color: white;
+  padding: 13px 28px;
+  cursor: pointer;
 }
 
 .fixed_top_right {
