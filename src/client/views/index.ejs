@@ -21,13 +21,46 @@
     <div id="overlay" class="flex-column justify-content-center align-items-center">
         <div class="loader">Loading...</div>
     </div>
-    <main class="d-lg-flex flex-lg-column justify-content-lg-start align-items-lg-start w-100 h-100">
+    <main class="d-lg-flex flex-lg-column justify-content-lg-start align-items-lg-start w-100 h-50">
         <div class="d-lg-flex flex-lg-row justify-content-around align-items-center tac-container">
-            <div class="d-flex flex-column justify-content-end align-items-center previewScene-container">
+
+            <div class="d-flex flex-column justify-content-end align-items-center previewScene-container big-screen-config">
                 <img id="previewScene" class="previewScene-image">
                 <select class="form-select" id="scenes" onchange="changePreviewScene(this);"></select>
             </div>
-            <div class="transactionScene-container">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary small-screen-config" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade small-screen-config" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="transactionScene-container">
+                            <button id="transactionScene" class=" tac_transation_button_disabled" disabled
+                                    onclick="transationScene()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-right-left"
+                                     width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <line x1="21" y1="7" x2="3" y2="7" />
+                                    <path d="M18 10l3 -3l-3 -3" />
+                                    <path d="M6 20l-3 -3l3 -3" />
+                                    <line x1="3" y1="17" x2="21" y2="17" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transactionScene-container big-screen-config">
                 <button id="transactionScene" class=" tac_transation_button_disabled" disabled
                     onclick="transationScene()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-right-left"

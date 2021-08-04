@@ -1,6 +1,26 @@
+@media (min-width: 993px) {
+  .big-screen-config {
+    display: block !important;
+  }
+
+  .small-screen-config {
+    display: none !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .big-screen-config {
+    display: none !important;
+  }
+
+  .small-screen-config {
+    display: block !important;
+  }
+}
+
 .tac-container {
   width: 100% !important;
-  height: 100% !important;
+
 }
 
 @media (min-width: 577px) and (max-width: 992px) {
@@ -97,7 +117,9 @@
   }
 
   .previewScene-image {
-    max-height: 310px;
+    width: auto;
+    height: 320px;
+    max-height: 315px;
     max-width: 640px;
   }
 
@@ -128,6 +150,7 @@
     width: 100% !important;
     text-align: center;
     transform: rotate(90deg);
+    margin: 15px 0;
   }
 
   .tac_transation_button,
