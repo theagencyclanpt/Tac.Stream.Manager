@@ -170,6 +170,10 @@
   cursor: pointer;
 }
 
+.modal {
+  display: none !important;
+}
+
 .fixed_top_right {
   position: fixed;
   top: 0;

@@ -101,3 +101,13 @@ function transationScene() {
       handlerError();
     });
 }
+
+function showModal(element_id) {
+    document.getElementById(element_id).style.zIndex = "-100";
+    document.getElementById(element_id).style.display = "block !important";
+}
+
+function disableModal(element_id){
+    document.getElementById(element_id).style.zIndex = "100";
+    document.getElementById(element_id).style.display = "none !important";
+}

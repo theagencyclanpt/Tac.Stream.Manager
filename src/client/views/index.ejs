@@ -29,19 +29,19 @@
                 <select class="form-select" id="scenes" onchange="changePreviewScene(this);"></select>
             </div>
             <!-- Button trigger modal -->
-            <button type="button" class="btn modal-button small-screen-config" id="modal-button" onclick="showModal()" data-bs-toggle="modal" data-bs-target="#previewModal">
+            <button type="button" class="btn modal-button small-screen-config" id="modal-button" onclick="showModal('previewModal')">
                 Open preview screen
             </button>
 
             <!-- Modal -->
-            <div class="modal fade small-screen-config" id="previewModal" tabindex="-1" aria-labelledby="modal" aria-hidden="true">
+            <div class="modal small-screen-config" id="previewModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
                             ...
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" onclick="disableModal('previewModal')" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Understood</button>
                             <div class="transactionScene-container">
                                 <button id="transactionScene" class=" tac_transation_button_disabled" disabled
@@ -157,18 +157,6 @@
 
     <script type="text/javascript" src="/public/scripts/home/eventHandler.js"></script>
     <script type="text/javascript" src="/public/scripts/home/notificationHandler.js"></script>
-    <script>
-        function showModal(){
-            var myModal = document.getElementById('previewModal')
-            var myInput = document.getElementById('modal-button')
-
-            myModal.addEventListener('shown.bs.modal', function () {
-                myInput.focus()
-                alert(WORKING)
-            })
-        }
-
-    </script>
 </body>
 
 </html>
