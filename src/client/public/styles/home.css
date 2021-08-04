@@ -58,6 +58,7 @@
     width: 426px;
     height: 240px;
     border: 2px solid #101729;
+    margin: auto;
   }
 
   .previewScene-image {
@@ -87,6 +88,7 @@
     width: 360px;
     height: 180px;
     border: 2px solid #101729;
+    margin: auto;
   }
 
   .previewScene-image {
@@ -161,11 +163,6 @@
   .tac_transation_button_error {
     margin: 15px 10px;
   }
-}
-
-modal-container {
-  border: 2px solid #101729 !important;
-  margin: auto;
 }
 
 .modal-button {
