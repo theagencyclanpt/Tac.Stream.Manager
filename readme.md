@@ -2,8 +2,6 @@
 
 > :warning: **This version just work on windows**
 
-> :warning: **This version not contain Counter Strike GSI**
-
 ## Requirements
 
 - [OBS +27.0.0](https://obsproject.com/pt-br)
@@ -11,6 +9,14 @@
 - [Node v12.17.0](https://nodejs.org/en/download/)
 
 ## Get Started
+
+After you start you need copy the cs go config (change da cs go path if necesseray).
+
+> :warning: **If you change GSI_PORT on .env file you need change inside da config/gamestate_integration_tac_stream.cfg on uri**
+
+```bash
+    cp ".\config\gamestate_integration_tac_stream.cfg"  "G:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg"
+```
 
 ```bash
 git clone https://github.com/The-Agency-Clan-Dev/Tac.Stream.Manager.git

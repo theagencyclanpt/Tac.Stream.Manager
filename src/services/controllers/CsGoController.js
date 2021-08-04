@@ -4,6 +4,10 @@ const {
   isRunningAsync,
 } = require("../helper");
 
+const { GsiAuthToken, GsiPort } = require("../../config");
+
+const CSGOGSI = require("node-csgo-gsi");
+
 class CsGoController {
   constructor(provider, basePath, webScoketProvider) {
     if (!provider)
@@ -16,6 +20,10 @@ class CsGoController {
         "Argument webScoketProvider is missing on ObsController constructor."
       );
 
+    this.GSI = new CSGOGSI({
+      port: GsiPort,
+      authToken: [GsiAuthToken], // this must match the cfg auth token
+    });
     this.WebScoketProvider = webScoketProvider;
     this.Provider = provider;
     this.BasePath = "/" + basePath;
@@ -44,6 +52,8 @@ class CsGoController {
           response.status(500).json({
             message: "Invalid Ip.",
           });
+          this.HandlerNotificationService();
+
           return;
         }
 
@@ -51,13 +61,7 @@ class CsGoController {
           await startProcessAsync({
             program: `steam://connect/${ip}/`,
           });
-          this.State = {
-            Type: "CSGO_STATE",
-            Ip: ip,
-            Connected: true,
-          };
-
-          this.HandlerNotificationService();
+          this.State.Ip = ip;
         }
 
         response.json(this.State);
@@ -74,18 +78,22 @@ class CsGoController {
             program: this.CsGoProcessName,
           });
 
-          this.State = {
-            Type: "CSGO_STATE",
-            Connected: false,
-            Ip: null,
-          };
-
-          this.HandlerNotificationService();
+          this.State.Connected = false;
         }
+
+        this.HandlerNotificationService();
 
         response.json(this.State);
       }
     );
+
+    let _oldThis = this;
+    this.GSI.on("all", (data) => {
+      if (data.provider.appid === 730) {
+        this.State.Connected = true;
+        this.HandlerNotificationService();
+      }
+    });
   }
 
   OnClientConnected(ws) {
