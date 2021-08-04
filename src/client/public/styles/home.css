@@ -73,6 +73,7 @@
     max-width: 426px;
     max-height: 240px;
     border: 2px solid #101729;
+    margin: auto;
   }
 
   .currentScene-image {
@@ -101,6 +102,7 @@
     max-width: 360px;
     max-height: 180px;
     border: 2px solid #101729;
+    margin: auto;
   }
 
   .currentScene-image {
@@ -161,6 +163,11 @@
   }
 }
 
+modal-container {
+  border: 2px solid #101729 !important;
+  margin: auto;
+}
+
 .modal-button {
   margin: 20px auto;
   background-color: #101729;
@@ -195,6 +202,8 @@
   color: white;
   padding: 13px 28px;
   cursor: not-allowed;
+  width: 100px;
+  height: 70px;
 }
 
 .tac_transation_button_on {

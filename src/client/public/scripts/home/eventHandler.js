@@ -109,7 +109,7 @@ function showModal(element_id) {
     console.log('working');
 }
 
-function disableModal(element_id){
+function hideModal(element_id){
     document.getElementById(element_id).style.display = "none";
     document.getElementById(element_id).style.zIndex = "-100";
     console.log('working');

@@ -34,32 +34,32 @@
             </button>
 
             <!-- Modal -->
-            <div class="" id="previewModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="disableModal('previewModal')">Close</button>
-                            <div class="transactionScene-container">
-                                <button id="transactionScene" class=" tac_transation_button_disabled" disabled
-                                        onclick="transationScene()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-right-left"
-                                         width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <line x1="21" y1="7" x2="3" y2="7" />
-                                        <path d="M18 10l3 -3l-3 -3" />
-                                        <path d="M6 20l-3 -3l3 -3" />
-                                        <line x1="3" y1="17" x2="21" y2="17" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+            <div class="modal-content modal-dialog-centered" id="previewModal">
+                <div class="modal-body">
+                    <div class="d-flex flex-column justify-content-end align-items-center previewScene-container">
+                        <img id="previewScene" class="previewScene-image">
+                        <select class="form-select" id="scenes" onchange="changePreviewScene(this);"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="transactionScene-container">
+                        <button type="button" class="tac_transation_button_disabled" onclick="hideModal('previewModal')">Close</button>
+                        <button id="transactionScene" class=" tac_transation_button_disabled" disabled
+                                onclick="transationScene()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-right-left"
+                                 width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <line x1="21" y1="7" x2="3" y2="7" />
+                                <path d="M18 10l3 -3l-3 -3" />
+                                <path d="M6 20l-3 -3l3 -3" />
+                                <line x1="3" y1="17" x2="21" y2="17" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
+
 
             <div class="transactionScene-container big-screen-config">
                 <button id="transactionScene" class=" tac_transation_button_disabled" disabled
