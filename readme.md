@@ -15,7 +15,7 @@ After you start you need copy the cs go config (change the cs go path if necesse
 > :warning: **If you change GSI_PORT on .env file you need change inside da config/gamestate_integration_tac_stream.cfg on uri**
 
 ```bash
-    cp ".\config\gamestate_integration_tac_stream.cfg"  "G:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg"
+cp ".\config\gamestate_integration_tac_stream.cfg"  "G:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg"
 ```
 
 ```bash
