@@ -10,7 +10,7 @@
 
 ## Get Started
 
-After you start you need copy the cs go config (change da cs go path if necesseray).
+After you start you need copy the cs go config (change the cs go path if necesseray).
 
 > :warning: **If you change GSI_PORT on .env file you need change inside da config/gamestate_integration_tac_stream.cfg on uri**
 
