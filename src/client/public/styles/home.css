@@ -159,7 +159,7 @@
   .tac_transation_button_disabled,
   .tac_transation_button_on,
   .tac_transation_button_error {
-    margin: 2px auto;
+    margin: 15px 10px;
   }
 }
 
