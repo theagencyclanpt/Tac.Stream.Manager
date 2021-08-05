@@ -1,6 +1,10 @@
+main {
+  background-color: white;
+}
+
 .tac-container {
   width: 100% !important;
-  margin: 5% 0;
+  padding: 5% 0;
 }
 
 @media (min-width: 993px) {
@@ -165,6 +169,10 @@
   }
 }
 
+.modal-body {
+  padding: 0 !important;
+}
+
 .modal-button {
   margin: 20px auto;
   background-color: #101729;
@@ -175,7 +183,11 @@
 }
 
 #previewModal {
-  display: none;
+  display: block;
+  position: absolute;
+  top: 5px;
+  z-index: -100;
+  background-color: white;
 }
 
 .fixed_top_right {

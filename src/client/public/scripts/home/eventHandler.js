@@ -103,14 +103,12 @@ function transationScene() {
 }
 
 function showModal(element_id) {
-    document.getElementById(element_id).style.display = "block";
-    document.getElementById(element_id).style.position = "absolute";
+    //document.getElementById(element_id).style.display = "block";
+    //document.getElementById(element_id).style.position = "absolute";
     document.getElementById(element_id).style.zIndex = "100";
-    console.log('working');
 }
 
 function hideModal(element_id){
-    document.getElementById(element_id).style.display = "none";
+    //document.getElementById(element_id).style.display = "none";
     document.getElementById(element_id).style.zIndex = "-100";
-    console.log('working');
 }
