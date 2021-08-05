@@ -2,10 +2,16 @@ const startObsElement = document.getElementById("startObs");
 const stopObsElement = document.getElementById("stopObs");
 const startTransmissionElement = document.getElementById("startTransmission");
 const stopTransmissionElement = document.getElementById("stopTransmission");
-const transactionSceneElement = document.getElementById("transactionScene");
-const scenesElement = document.getElementById("scenes");
+const transactionSceneElement = window.OnMobileMode
+  ? document.getElementById("transactionSceneMobile")
+  : document.getElementById("transactionScene");
+const scenesElement = window.OnMobileMode
+  ? document.getElementById("scenesMobile")
+  : document.getElementById("scenes");
 const currentSceneImgElement = document.getElementById("currentScene");
-const previewSceneImgElement = document.getElementById("previewScene");
+const previewSceneImgElement = window.OnMobileMode
+  ? document.getElementById("previewSceneMobile")
+  : document.getElementById("previewScene");
 
 const startAndConnectCsGoElement = document.getElementById(
   "startAndConnectCsGo"
