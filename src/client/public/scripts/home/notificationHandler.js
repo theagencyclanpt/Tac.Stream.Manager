@@ -101,7 +101,6 @@ function OnCsGo(state) {
 }
 
 function OnProcessManager(state) {
-  console.log(state);
   if (state.Processing) {
     document.getElementById("overlay").style.display = "flex";
   } else {
