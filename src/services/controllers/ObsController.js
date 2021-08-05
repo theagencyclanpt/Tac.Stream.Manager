@@ -35,6 +35,14 @@ class ObsController {
       Connected: false,
       Streaming: false,
       Scenes: [],
+      ProcessMap: {
+        StartAndConnect: null,
+        Stop: null,
+        ChangePreviewScene: null,
+        ChangeCurrentScene: null,
+        StopStream: null,
+        StartStream: null,
+      },
     };
 
     this.ProcessReconnect = null;
@@ -54,6 +62,8 @@ class ObsController {
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (!isRunning) {
+          this.State.ProcessMap.StartAndConnect = true;
+          this.HandlerNotificationService();
           await Helper.startProcessAsync({
             directory: ObsPath,
             program: this.obsProcessName,
@@ -74,10 +84,14 @@ class ObsController {
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (isRunning) {
+          this.State.ProcessMap.Stop = true;
+          this.HandlerNotificationService();
           await Helper.stopProcessAsync({
             program: this.obsProcessName,
           });
         }
+        this.State.ProcessMap.Stop = null;
+        this.HandlerNotificationService();
 
         response.json(this.State);
       }
@@ -88,6 +102,9 @@ class ObsController {
       async (request, response) => {
         let scene = request.params.scene;
         if (this.State.Connected && this.State.CurrentScene !== scene) {
+          this.State.ProcessMap.ChangeCurrentScene = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("SetCurrentScene", {
             "scene-name": scene,
           });
@@ -104,11 +121,11 @@ class ObsController {
       async (request, response) => {
         let scene = request.params.scene;
         if (this.State.Connected && this.State.PreviewScene !== scene) {
+          this.State.ProcessMap.ChangePreviewScene = true;
+          this.HandlerNotificationService();
           await this.ObsProcessProvider.send("SetPreviewScene", {
             "scene-name": scene,
           });
-          this.State.PreviewScene = scene;
-          this.GetScreenshot();
         }
 
         response.json(this.State);
@@ -119,8 +136,10 @@ class ObsController {
       `${this.BasePath}/startStream`,
       async (request, response) => {
         if (this.State.Connected) {
+          this.State.ProcessMap.StartStream = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("StartStreaming");
-          this.State.Streaming = true;
         }
 
         response.json(this.State);
@@ -131,8 +150,9 @@ class ObsController {
       `${this.BasePath}/stopStream`,
       async (request, response) => {
         if (this.State.Connected) {
+          this.State.ProcessMap.StopStream = true;
+          this.HandlerNotificationService();
           await this.ObsProcessProvider.send("StopStreaming");
-          this.State.Streaming = false;
         }
 
         response.json(this.State);
@@ -142,7 +162,13 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/transationScene`,
       async (request, response) => {
-        if (this.State.Connected) {
+        if (
+          this.State.Connected &&
+          this.State.CurrentScene != this.State.PreviewScene
+        ) {
+          this.State.ProcessMap.ChangeCurrentScene = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("SetCurrentScene", {
             "scene-name": this.State.PreviewScene,
           });
@@ -217,17 +243,21 @@ class ObsController {
       this.State.Connected = true;
       console.log("Authentication Success");
 
-      this.HandlerNotificationService();
+      this.State.ProcessMap.StartAndConnect = null;
 
       this.CurrentSceneScreenShotAction = setInterval(
         async () => await this.GetScreenshot(),
         2000
       );
+
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("AuthenticationFailure", () => {
       this.State.Connected = false;
       console.log("Authentication Failure");
+      this.State.ProcessMap.StartAndConnect = null;
+
       this.HandlerNotificationService();
     });
 
@@ -238,19 +268,29 @@ class ObsController {
       clearInterval(this.CurrentSceneScreenShotAction);
     });
 
+    this.ObsProcessProvider.on("PreviewSceneChanged", async (data) => {
+      this.State.PreviewScene = data.sceneName;
+      await this.GetScreenshot();
+      this.State.ProcessMap.ChangePreviewScene = null;
+      this.HandlerNotificationService();
+    });
+
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
+      this.State.ProcessMap.ChangeCurrentScene = null;
       this.State.CurrentScene = data.sceneName;
       console.log(`New Active Scene: ${data.sceneName}`);
       this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStarted", () => {
+      this.State.ProcessMap.StartStream = null;
       this.State.Streaming = true;
       console.log(`Stream started`);
       this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStopped", () => {
+      this.State.ProcessMap.StopStream = null;
       this.State.Streaming = false;
       console.log(`Stream ended`);
       this.HandlerNotificationService();

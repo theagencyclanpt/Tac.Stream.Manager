@@ -32,7 +32,12 @@ class CsGoController {
       Type: "CSGO_STATE",
       Ip: null,
       Connected: false,
+      ProcessMap: {
+        StartAndConnect: null,
+        Stop: null,
+      },
     };
+    this.TryingConnect = null;
   }
 
   Mount() {
@@ -52,16 +57,23 @@ class CsGoController {
           response.status(500).json({
             message: "Invalid Ip.",
           });
-          this.HandlerNotificationService();
-
           return;
         }
 
         if (!isRunning) {
+          this.State.ProcessMap.StartAndConnect = true;
+          this.HandlerNotificationService();
+
           await startProcessAsync({
             program: `steam://connect/${ip}/`,
           });
+
           this.State.Ip = ip;
+
+          this.TryingConnect = setTimeout(() => {
+            this.State.ProcessMap.StartAndConnect = null;
+            this.HandlerNotificationService();
+          }, 20000);
         }
 
         response.json(this.State);
@@ -74,23 +86,28 @@ class CsGoController {
         var isRunning = await isRunningAsync(this.CsGoProcessName);
 
         if (isRunning) {
+          this.State.ProcessMap.Stop = true;
+          this.HandlerNotificationService();
+
           await stopProcessAsync({
             program: this.CsGoProcessName,
           });
 
           this.State.Connected = false;
-        }
 
-        this.HandlerNotificationService();
+          this.State.ProcessMap.Stop = null;
+          this.HandlerNotificationService();
+        }
 
         response.json(this.State);
       }
     );
 
-    let _oldThis = this;
     this.GSI.on("all", (data) => {
       if (data.provider.appid === 730) {
+        clearTimeout(this.TryingConnect);
         this.State.Connected = true;
+        this.State.ProcessMap.StartAndConnect = null;
         this.HandlerNotificationService();
       }
     });

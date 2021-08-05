@@ -19,9 +19,6 @@ const WebSocketProvider = new WebSocket(
 
 WebSocketProvider.onmessage = (event) => {
   let state = JSON.parse(event.data);
-  document.getElementById("overlay").style.display = "none";
-
-  console.log(state);
 
   switch (state.Type) {
     case "OBS_STATE":
@@ -32,8 +29,12 @@ WebSocketProvider.onmessage = (event) => {
       OnCsGo(state);
       break;
 
-    default:
+    case "PROCESS_MANAGER":
+      OnProcessManager(state);
       break;
+
+    default:
+      console.log(state.Type, "Not mapped");
   }
 };
 
@@ -96,5 +97,13 @@ function OnCsGo(state) {
   } else {
     AllowButton(startAndConnectCsGoElement);
     DisableButton(stopCsGoElement);
+  }
+}
+
+function OnProcessManager(state) {
+  if (state.Processing) {
+    document.getElementById("overlay").style.display = "flex";
+  } else {
+    document.getElementById("overlay").style.display = "none";
   }
 }
