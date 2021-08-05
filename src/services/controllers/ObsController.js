@@ -35,6 +35,10 @@ class ObsController {
       Connected: false,
       Streaming: false,
       Scenes: [],
+      ProcessMap: {
+        StartAndConnect: null,
+        Stop: null,
+      },
     };
 
     this.ProcessReconnect = null;
@@ -51,6 +55,9 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/startProcess`,
       async (request, response) => {
+        this.State.ProcessMap.StartAndConnect = true;
+        this.HandlerNotificationService();
+
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (!isRunning) {
@@ -71,6 +78,8 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/stopProcess`,
       async (request, response) => {
+        this.State.ProcessMap.Stop = true;
+        this.HandlerNotificationService();
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (isRunning) {
@@ -78,6 +87,8 @@ class ObsController {
             program: this.obsProcessName,
           });
         }
+        this.State.ProcessMap.Stop = null;
+        this.HandlerNotificationService();
 
         response.json(this.State);
       }
@@ -217,17 +228,21 @@ class ObsController {
       this.State.Connected = true;
       console.log("Authentication Success");
 
-      this.HandlerNotificationService();
+      this.State.ProcessMap.StartAndConnect = null;
 
       this.CurrentSceneScreenShotAction = setInterval(
         async () => await this.GetScreenshot(),
         2000
       );
+
+      this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("AuthenticationFailure", () => {
       this.State.Connected = false;
       console.log("Authentication Failure");
+      this.State.ProcessMap.StartAndConnect = null;
+
       this.HandlerNotificationService();
     });
 

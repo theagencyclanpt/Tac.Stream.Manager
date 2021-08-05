@@ -1,18 +1,9 @@
-function PreloadStart() {
-  document.getElementById("overlay").style.display = "flex";
-}
-
-function PreloadEnd() {
-  document.getElementById("overlay").style.display = "none";
-}
-
 function handlerError() {
-  PreloadEnd();
+  console.log("Error");
 }
 
 function startObs() {
-  PreloadStart();
-  fetch("/api/obs/startProcess")
+  fetch("/process/api/obs/startProcess")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -20,8 +11,7 @@ function startObs() {
 }
 
 function stopObs() {
-  PreloadStart();
-  fetch("/api/obs/stopProcess")
+  fetch("/process/api/obs/stopProcess")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -29,8 +19,7 @@ function stopObs() {
 }
 
 function startTransmission() {
-  PreloadStart();
-  fetch("/api/obs/startStream")
+  fetch("/process/api/obs/startStream")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -38,10 +27,9 @@ function startTransmission() {
 }
 
 function choiceScene() {
-  PreloadStart();
   let selectedScen = document.getElementById("sceneList").value;
 
-  fetch("/api/obs/changeScene/" + selectedScen)
+  fetch("/process/api/obs/changeScene/" + selectedScen)
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -49,8 +37,7 @@ function choiceScene() {
 }
 
 function stopTransmission() {
-  PreloadStart();
-  fetch("/api/obs/stopStream")
+  fetch("/process/api/obs/stopStream")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -66,9 +53,7 @@ function startAndConnectCsGo() {
 }
 
 function connectCsGo(ip) {
-  PreloadStart();
-
-  fetch("/api/csgo/startProcess/" + ip)
+  fetch("/process/api/csgo/startProcess/" + ip)
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -76,8 +61,7 @@ function connectCsGo(ip) {
 }
 
 function stopCsGo() {
-  PreloadStart();
-  fetch("/api/csgo/stopProcess/")
+  fetch("/process/api/csgo/stopProcess/")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -85,8 +69,7 @@ function stopCsGo() {
 }
 
 function changePreviewScene(element) {
-  PreloadStart();
-  fetch("/api/obs/changePreviewScene/" + element.value)
+  fetch("/process/api/obs/changePreviewScene/" + element.value)
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -94,8 +77,7 @@ function changePreviewScene(element) {
 }
 
 function transationScene() {
-  PreloadStart();
-  fetch("/api/obs/transationScene/")
+  fetch("/process/api/obs/transationScene/")
     .then((r) => {})
     .catch(() => {
       handlerError();
@@ -103,12 +85,12 @@ function transationScene() {
 }
 
 function showModal(element_id) {
-    //document.getElementById(element_id).style.display = "block";
-    //document.getElementById(element_id).style.position = "absolute";
-    document.getElementById(element_id).style.zIndex = "100";
+  //document.getElementById(element_id).style.display = "block";
+  //document.getElementById(element_id).style.position = "absolute";
+  document.getElementById(element_id).style.zIndex = "100";
 }
 
-function hideModal(element_id){
-    //document.getElementById(element_id).style.display = "none";
-    document.getElementById(element_id).style.zIndex = "-100";
+function hideModal(element_id) {
+  //document.getElementById(element_id).style.display = "none";
+  document.getElementById(element_id).style.zIndex = "-100";
 }
