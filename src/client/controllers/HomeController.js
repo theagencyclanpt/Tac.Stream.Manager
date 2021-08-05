@@ -40,7 +40,7 @@ class HomeController {
     this.ServiceNotifications.on("message", function (event) {
       let state = JSON.parse(event);
 
-      if (state.Type == "OBS_STATE") {
+      if (state.Type == "OBS_STATE" || state.Type == "CSGO_STATE") {
         let processTemp = Object.values(state.ProcessMap);
 
         _oldThis.Processing =
