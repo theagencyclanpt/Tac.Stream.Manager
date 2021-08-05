@@ -38,6 +38,10 @@ class ObsController {
       ProcessMap: {
         StartAndConnect: null,
         Stop: null,
+        ChangePreviewScene: null,
+        ChangeCurrentScene: null,
+        StopStream: null,
+        StartStream: null,
       },
     };
 
@@ -55,12 +59,11 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/startProcess`,
       async (request, response) => {
-        this.State.ProcessMap.StartAndConnect = true;
-        this.HandlerNotificationService();
-
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (!isRunning) {
+          this.State.ProcessMap.StartAndConnect = true;
+          this.HandlerNotificationService();
           await Helper.startProcessAsync({
             directory: ObsPath,
             program: this.obsProcessName,
@@ -78,11 +81,11 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/stopProcess`,
       async (request, response) => {
-        this.State.ProcessMap.Stop = true;
-        this.HandlerNotificationService();
         var isRunning = await Helper.isRunningAsync(this.obsProcessName);
 
         if (isRunning) {
+          this.State.ProcessMap.Stop = true;
+          this.HandlerNotificationService();
           await Helper.stopProcessAsync({
             program: this.obsProcessName,
           });
@@ -99,6 +102,9 @@ class ObsController {
       async (request, response) => {
         let scene = request.params.scene;
         if (this.State.Connected && this.State.CurrentScene !== scene) {
+          this.State.ProcessMap.ChangeCurrentScene = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("SetCurrentScene", {
             "scene-name": scene,
           });
@@ -115,11 +121,11 @@ class ObsController {
       async (request, response) => {
         let scene = request.params.scene;
         if (this.State.Connected && this.State.PreviewScene !== scene) {
+          this.State.ProcessMap.ChangePreviewScene = true;
+          this.HandlerNotificationService();
           await this.ObsProcessProvider.send("SetPreviewScene", {
             "scene-name": scene,
           });
-          this.State.PreviewScene = scene;
-          this.GetScreenshot();
         }
 
         response.json(this.State);
@@ -130,8 +136,10 @@ class ObsController {
       `${this.BasePath}/startStream`,
       async (request, response) => {
         if (this.State.Connected) {
+          this.State.ProcessMap.StartStream = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("StartStreaming");
-          this.State.Streaming = true;
         }
 
         response.json(this.State);
@@ -142,8 +150,9 @@ class ObsController {
       `${this.BasePath}/stopStream`,
       async (request, response) => {
         if (this.State.Connected) {
+          this.State.ProcessMap.StopStream = true;
+          this.HandlerNotificationService();
           await this.ObsProcessProvider.send("StopStreaming");
-          this.State.Streaming = false;
         }
 
         response.json(this.State);
@@ -153,7 +162,13 @@ class ObsController {
     this.Provider.get(
       `${this.BasePath}/transationScene`,
       async (request, response) => {
-        if (this.State.Connected) {
+        if (
+          this.State.Connected &&
+          this.State.CurrentScene != this.State.PreviewScene
+        ) {
+          this.State.ProcessMap.ChangeCurrentScene = true;
+          this.HandlerNotificationService();
+
           await this.ObsProcessProvider.send("SetCurrentScene", {
             "scene-name": this.State.PreviewScene,
           });
@@ -253,19 +268,29 @@ class ObsController {
       clearInterval(this.CurrentSceneScreenShotAction);
     });
 
+    this.ObsProcessProvider.on("PreviewSceneChanged", async (data) => {
+      this.State.PreviewScene = data.sceneName;
+      await this.GetScreenshot();
+      this.State.ProcessMap.ChangePreviewScene = null;
+      this.HandlerNotificationService();
+    });
+
     this.ObsProcessProvider.on("SwitchScenes", (data) => {
+      this.State.ProcessMap.ChangeCurrentScene = null;
       this.State.CurrentScene = data.sceneName;
       console.log(`New Active Scene: ${data.sceneName}`);
       this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStarted", () => {
+      this.State.ProcessMap.StartStream = null;
       this.State.Streaming = true;
       console.log(`Stream started`);
       this.HandlerNotificationService();
     });
 
     this.ObsProcessProvider.on("StreamStopped", () => {
+      this.State.ProcessMap.StopStream = null;
       this.State.Streaming = false;
       console.log(`Stream ended`);
       this.HandlerNotificationService();
