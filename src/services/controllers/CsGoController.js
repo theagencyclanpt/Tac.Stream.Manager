@@ -37,6 +37,7 @@ class CsGoController {
         Stop: null,
       },
     };
+    this.TryingConnect = null;
   }
 
   Mount() {
@@ -66,7 +67,13 @@ class CsGoController {
           await startProcessAsync({
             program: `steam://connect/${ip}/`,
           });
+
           this.State.Ip = ip;
+
+          this.TryingConnect = setTimeout(() => {
+            this.State.ProcessMap.StartAndConnect = null;
+            this.HandlerNotificationService();
+          }, 20000);
         }
 
         response.json(this.State);
@@ -98,6 +105,7 @@ class CsGoController {
 
     this.GSI.on("all", (data) => {
       if (data.provider.appid === 730) {
+        clearTimeout(this.TryingConnect);
         this.State.Connected = true;
         this.State.ProcessMap.StartAndConnect = null;
         this.HandlerNotificationService();
