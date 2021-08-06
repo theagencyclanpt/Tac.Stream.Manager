@@ -39,15 +39,16 @@
             <div class="modal-content modal-dialog-centered" id="previewModal">
                 <div class="modal-body">
                     <div class="d-flex flex-column justify-content-end align-items-center previewScene-container">
-                        <img id="previewScene" class="previewScene-image">
-                        <select class="form-select" id="scenes" onchange="changePreviewScene(this);"></select>
+                        <img id="previewSceneMobile" class="previewScene-image">
+                        <select class="form-select" id="scenesMobile" onchange="changePreviewScene(this);"></select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="transactionScene-container">
                         <button type="button" class="tac_transation_button_disabled"
                             onclick="hideModal('previewModal')">Close</button>
-                        <button id="" class=" tac_transation_button_disabled" disabled onclick="transationScene()">
+                        <button id="transactionSceneMobile" class=" tac_transation_button_disabled" disabled
+                            onclick="transationScene()">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-arrows-right-left" width="44" height="44"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="#F1F4F9" fill="none"
@@ -157,6 +158,7 @@
         integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ"
         crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="/public/scripts/home/mobile.js"></script>
     <script type="text/javascript" src="/public/scripts/home/eventHandler.js"></script>
     <script type="text/javascript" src="/public/scripts/home/notificationHandler.js"></script>
 </body>
