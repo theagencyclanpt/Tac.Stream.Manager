@@ -65,7 +65,7 @@ class CsGoController {
           this.HandlerNotificationService();
 
           await startProcessAsync({
-            program: `steam://connect/${ip}/`,
+            program: `steam://run/730//+connect ${ip}`,
           });
 
           this.State.Ip = ip;
