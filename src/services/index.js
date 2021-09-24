@@ -1,5 +1,6 @@
 const ObsController = require("./controllers/ObsController");
 const CsGoController = require("./controllers/CsGoController");
+const Ts3Controller = require("./controllers/Ts3Controller");
 
 class Services {
   constructor(provider, webScoketProvider) {
@@ -17,6 +18,13 @@ class Services {
       "csgo",
       webScoketProvider
     );
+
+    this.Ts3Controller = new Ts3Controller(
+      this.Provider,
+      "ts3",
+      webScoketProvider
+    );
+
     this.Mount();
   }
 
@@ -27,6 +35,7 @@ class Services {
 
     this.ObsController.Mount();
     this.CsGoController.Mount();
+    this.Ts3Controller.Mount();
 
     this.Provider.on("mount", function (parent) {
       console.log("Api Service Mounted");
@@ -38,6 +47,7 @@ class Services {
   OnClientConnected(ws) {
     this.ObsController.OnClientConnected(ws);
     this.CsGoController.OnClientConnected(ws);
+    this.Ts3Controller.OnClientConnected(ws);
   }
 }
 

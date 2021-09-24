@@ -4,7 +4,7 @@ function handlerError() {
 
 function startObs() {
   fetch("/process/api/obs/startProcess")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -12,7 +12,7 @@ function startObs() {
 
 function stopObs() {
   fetch("/process/api/obs/stopProcess")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -20,7 +20,7 @@ function stopObs() {
 
 function startTransmission() {
   fetch("/process/api/obs/startStream")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -30,7 +30,7 @@ function choiceScene() {
   let selectedScen = document.getElementById("sceneList").value;
 
   fetch("/process/api/obs/changeScene/" + selectedScen)
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -38,7 +38,7 @@ function choiceScene() {
 
 function stopTransmission() {
   fetch("/process/api/obs/stopStream")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -54,7 +54,7 @@ function startAndConnectCsGo() {
 
 function connectCsGo(ip) {
   fetch("/process/api/csgo/startProcess/" + ip)
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -62,7 +62,7 @@ function connectCsGo(ip) {
 
 function stopCsGo() {
   fetch("/process/api/csgo/stopProcess/")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -70,7 +70,23 @@ function stopCsGo() {
 
 function changePreviewScene(element) {
   fetch("/process/api/obs/changePreviewScene/" + element.value)
-    .then((r) => {})
+    .then((r) => { })
+    .catch(() => {
+      handlerError();
+    });
+}
+
+function startAndConnectToTs3() {
+  fetch("/process/api/ts3/startProcess/")
+    .then((r) => { })
+    .catch(() => {
+      handlerError();
+    });
+}
+
+function closeTs3() {
+  fetch("/process/api/ts3/stopProcess/")
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
@@ -78,19 +94,16 @@ function changePreviewScene(element) {
 
 function transationScene() {
   fetch("/process/api/obs/transationScene/")
-    .then((r) => {})
+    .then((r) => { })
     .catch(() => {
       handlerError();
     });
 }
 
 function showModal(element_id) {
-  //document.getElementById(element_id).style.display = "block";
-  //document.getElementById(element_id).style.position = "absolute";
   document.getElementById(element_id).style.zIndex = "100";
 }
 
 function hideModal(element_id) {
-  //document.getElementById(element_id).style.display = "none";
   document.getElementById(element_id).style.zIndex = "-100";
 }

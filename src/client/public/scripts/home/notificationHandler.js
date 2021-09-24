@@ -18,6 +18,9 @@ const startAndConnectCsGoElement = document.getElementById(
 );
 const stopCsGoElement = document.getElementById("stopCsGo");
 
+const startAndConnectToTs3Element = document.getElementById("startAndConnectToTs3");
+const closeTs3Element = document.getElementById("closeTs3");
+
 //Create a dynamic url
 const WebSocketProvider = new WebSocket(
   `ws://${location.hostname}:${location.port}`
@@ -37,6 +40,9 @@ WebSocketProvider.onmessage = (event) => {
 
     case "PROCESS_MANAGER":
       OnProcessManager(state);
+      break;
+    case "TS3_STATE":
+      OnTs3(state);
       break;
 
     default:
@@ -111,5 +117,16 @@ function OnProcessManager(state) {
     document.getElementById("overlay").style.display = "flex";
   } else {
     document.getElementById("overlay").style.display = "none";
+  }
+}
+
+function OnTs3(state) {
+  console.log(state);
+  if (state.Connected) {
+    DisableButton(startAndConnectToTs3Element);
+    AllowButton(closeTs3Element);
+  } else {
+    DisableButton(closeTs3Element);
+    AllowButton(startAndConnectToTs3Element);
   }
 }

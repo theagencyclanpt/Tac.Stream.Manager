@@ -54,7 +54,18 @@ module.exports = {
   },
   stopProcessAsync: ({ program }) => {
     new Promise((resolve, reject) => {
-      exec(`taskkill /F /IM ${program}`, (err, stdout, stderr) => {
+      exec(`taskkill /F /fi ${program}`, (err, stdout, stderr) => {
+        if (err || stderr) {
+          reject(err);
+        }
+
+        resolve(stdout);
+      });
+    });
+  },
+  stopProcessPowershellAsync: ({ program }) => {
+    new Promise((resolve, reject) => {
+      exec(`Stop-Process -Name "${program}"`, { shell: "powershell" }, (err, stdout, stderr) => {
         if (err || stderr) {
           reject(err);
         }
