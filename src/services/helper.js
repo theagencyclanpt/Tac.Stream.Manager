@@ -1,6 +1,22 @@
 const exec = require("child_process").exec;
 
 module.exports = {
+  isRunningPowershellAsync: (process) => {
+    return new Promise((resolve, reject) => {
+      exec(`Get-Process ${process} -ErrorAction SilentlyContinue`, { shell: "powershell" }, (err, stdout) => {
+        if (err) {
+          reject(err);
+        }
+
+        if (stdout) {
+          resolve(true)
+        } else {
+          resolve(false);
+        }
+      });
+    });
+
+  },
   isRunningAsync: (query) =>
     new Promise((resolve, reject) => {
       let platform = process.platform;

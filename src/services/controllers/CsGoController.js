@@ -1,7 +1,7 @@
 const {
   startProcessAsync,
-  stopProcessAsync,
   isRunningAsync,
+  stopProcessPowershellAsync,
 } = require("../helper");
 
 const { GsiAuthToken, GsiPort } = require("../../config");
@@ -27,7 +27,8 @@ class CsGoController {
     this.WebScoketProvider = webScoketProvider;
     this.Provider = provider;
     this.BasePath = "/" + basePath;
-    this.CsGoProcessName = "csgo.exe";
+    this.CsGoExe = "csgo.exe";
+    this.ProcessName = "csgo";
     this.State = {
       Type: "CSGO_STATE",
       Ip: null,
@@ -50,7 +51,7 @@ class CsGoController {
     this.Provider.get(
       `${this.BasePath}/startProcess/:ip`,
       async (request, response, next) => {
-        var isRunning = await isRunningAsync(this.CsGoProcessName);
+        var isRunning = await isRunningAsync(this.CsGoExe);
         let ip = request.params.ip;
 
         if (!this.isValidIp(ip)) {
@@ -83,14 +84,14 @@ class CsGoController {
     this.Provider.get(
       `${this.BasePath}/stopProcess`,
       async (request, response, next) => {
-        var isRunning = await isRunningAsync(this.CsGoProcessName);
+        var isRunning = await isRunningAsync(this.CsGoExe);
 
         if (isRunning) {
           this.State.ProcessMap.Stop = true;
           this.HandlerNotificationService();
 
-          await stopProcessAsync({
-            program: this.CsGoProcessName,
+          await stopProcessPowershellAsync({
+            program: this.ProcessName,
           });
 
           this.State.Connected = false;
