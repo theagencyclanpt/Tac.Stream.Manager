@@ -121,7 +121,6 @@ function OnProcessManager(state) {
 }
 
 function OnTs3(state) {
-  console.log(state);
   if (state.Connected) {
     DisableButton(startAndConnectToTs3Element);
     AllowButton(closeTs3Element);

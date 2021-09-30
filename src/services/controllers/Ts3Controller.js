@@ -24,11 +24,44 @@ class Ts3Controller {
         this.BasePath = "/" + basePath;
         this.State = {
             Type: "TS3_STATE",
-            Connected: false
+            Connected: false,
+            ProcessMap: {
+                StartAndConnect: null,
+                Stop: null,
+            },
         };
+        this.ProcessPending = null;
+    }
+
+    CheckStatus() {
+        setInterval(async () => {
+            const oldSate = this.State;
+            const isRunning = await isRunningAsync(this.ProcessName);
+
+            const newState = {
+                ...oldSate,
+                Connected: isRunning,
+            }
+
+            if (oldSate.ProcessMap.StartAndConnect && newState.Connected) {
+                newState.ProcessMap.StartAndConnect = null;
+            }
+
+            if (oldSate.ProcessMap.Stop && !newState.Connected) {
+                newState.ProcessMap.Stop = null;
+            }
+
+            if (JSON.stringify(oldSate) === JSON.stringify(newState)) {
+                return;
+            }
+
+            this.State = newState;
+            this.HandlerNotificationService();
+        }, 1000);
     }
 
     Mount() {
+        this.CheckStatus();
         this.Provider.get(`${this.BasePath}`, async (request, response) => {
             response.json({
                 status: true,
@@ -38,16 +71,14 @@ class Ts3Controller {
         this.Provider.get(
             `${this.BasePath}/startProcess`,
             async (request, response, next) => {
-                var isRunning = await isRunningAsync(this.ProcessName);
+                if (!this.State.Connected) {
+                    this.State.ProcessMap.StartAndConnect = true;
+                    this.HandlerNotificationService();
 
-                if (!isRunning) {
                     await startProcessAsync({
                         program: `ts3server://agency?channel=AGENCY%20TV%2F%C2%BB%20LIVE%20ON%20NAO%20ENTRAR`,
                     });
                 }
-
-                this.State.Connected = true;
-                this.HandlerNotificationService();
                 response.json(this.State);
             }
         );
@@ -55,16 +86,14 @@ class Ts3Controller {
         this.Provider.get(
             `${this.BasePath}/stopProcess`,
             async (request, response, next) => {
-                var isRunning = await isRunningAsync(this.ProcessName);
-                if (isRunning) {
+                if (this.State.Connected) {
+                    this.State.ProcessMap.Stop = true;
+                    this.HandlerNotificationService();
+
                     await stopProcessPowershellAsync({
                         program: this.ProcessNameWithoutExe,
                     });
                 }
-
-                this.State.Connected = false;
-                this.HandlerNotificationService();
-
                 response.json(this.State);
             }
         );
@@ -76,9 +105,9 @@ class Ts3Controller {
 
     HandlerNotificationService() {
         let _oldThis = this;
-        this.WebScoketProvider.clients.forEach((client) =>
-            client.send(JSON.stringify({ ..._oldThis.State }))
-        );
+        this.WebScoketProvider.clients.forEach((client) => {
+            client.send(JSON.stringify({ ..._oldThis.State }));
+        });
     }
 }
 

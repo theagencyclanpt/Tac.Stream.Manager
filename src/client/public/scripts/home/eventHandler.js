@@ -46,7 +46,6 @@ function stopTransmission() {
 
 function startAndConnectCsGo() {
   let ip = prompt("Server Ip", "");
-
   if (ip) {
     connectCsGo(ip);
   }
